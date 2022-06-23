@@ -4,56 +4,69 @@
   box-sizing: border-box;
   font-family: sans-serif;
 }
+/* Body */
 body {
   display: grid;
 
   place-items: center;
   height: 100vh;
 }
-button{
-    all: unset;
-    font-size: 0.9rem;
-    color: #3e3e3e;
+/* All Buttons */
+button {
+  all: unset;
+  font-size: 0.9rem;
+  color: #3e3e3e;
+  cursor: pointer;
 }
+/* APP*/
 .app {
   border: solid 1px #00000020;
   border-radius: 5px;
   padding: 1rem 1.5rem;
   width: 320px;
 }
+/* Sections ttitle */
 .section-title {
   text-transform: uppercase;
   font-size: 1rem;
   border-bottom: solid 2px black;
   padding-bottom: 0.8rem;
 }
+/* Show completed section */
 .show-completed {
-    display: grid;
-    grid-auto-flow: column;
-    justify-content:start;
-    align-items: center;
-    gap: 1rem;
-    padding: 0.5rem;
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: start;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
 }
-.add-todo-item__form{
-    display: grid;
-    grid-auto-flow: column;
-    justify-content:start;
-    align-items: center;
-    gap: 1rem;
-    padding: 0.5rem;
+/* Add todo Form*/
+.add-todo-item__form {
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: start;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
 }
+/* Add todo Form input*/
 .add-todo {
-    width: 200px;
-    height: 25px;
-    border: solid 1.5px #d6d6d6;
-    border-radius: 3px;
+  width: 200px;
+  height: 25px;
+  border: solid 1.5px #d6d6d6;
+  border-radius: 3px;
 }
+/* List elements of todo */
 .todo {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    align-items: center;
-    gap: 1rem;
-    border-bottom: 1px solid#efefef;
-    padding: 0.5rem;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid#efefef;
+  padding: 0.5rem;
+}
+/* List elements of todo - checkbox */
+.completed p {
+  text-decoration: line-through;
 }
