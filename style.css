@@ -49,6 +49,7 @@ button {
   align-items: center;
   gap: 1rem;
   padding: 0.5rem;
+
 }
 /* Add todo Form input*/
 .add-todo {
@@ -65,8 +66,10 @@ button {
   gap: 1rem;
   border-bottom: 1px solid#efefef;
   padding: 0.5rem;
+
 }
 /* List elements of todo - checkbox */
 .completed p {
   text-decoration: line-through;
+
 }

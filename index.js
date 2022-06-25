@@ -38,11 +38,18 @@ let state = {
   showCompleted: false,
 };
 
-// function toggleShowCompleted() {
-//   state.showCompleted = !state.showCompleted;
-//   render();
-// }
+function toggleShowCompleted() {
+  state.showCompleted = !state.showCompleted;
+  render();
+}
+function toggleTodo(text) {
+  // find the todo we want to toggle
+  let match = state.todos.find(todo => todo.text === text)
+  if (!match) return
 
+  // if it exists, toggle it
+  match.completed = !match.completed
+} //✅
 //   state.todos.push(todo);
 //   render();
 // }
@@ -55,6 +62,36 @@ let state = {
 
 // For a single todo can I check if it si completed? todo.completed
 // For a single todo what is the text? todo.text
+
+// function getIncompleteTodos() {
+//   return state.todos.filter(todo => todo.completed === false)
+// }
+
+// function getCompleteTodos() {
+//   return state.todos.filter(todo => todo.completed === true)
+// }
+
+function getTodosToDisplay() {
+  if (state.showCompleted) return state.todos;
+  // else return getIncompleteTodos()
+}
+function createTodo(text) {
+  // check if the todo is in the list
+  let foundMatch = state.todos.some((todo) => todo.text === text);
+  if (foundMatch) {
+    return;
+  } else if (text.length === 0) {
+    return;
+  }
+  // guard statement
+  else state.todos.push({ text: text, completed: false });
+} //✅
+
+function deleteTodo(text) {
+  let updatedTodos = state.todos.filter(todo => todo.text !== text)
+  state.todos = updatedTodos
+} //✅
+
 
 // Creating App container
 function renderApp() {
@@ -76,7 +113,12 @@ function renderOptionsSection() {
 
   let showCompletedInput = document.createElement("input");
   showCompletedInput.type = "checkbox";
-  showCompletedInput.checked = true;
+  if(state.showCompleted) showCompletedInput.checked = true;
+  showCompletedInput.addEventListener("click", function () {
+    toggleShowCompleted();
+
+  }
+  );
 
   optionsSection.append(optionsTitle, showCompletedLabel);
   showCompletedLabel.append("Show completed", showCompletedInput);
@@ -102,9 +144,7 @@ function renderAddItemSection() {
   // Allowing the user to add a todo
   addItemForm.addEventListener("submit", function (event) {
     event.preventDefault();
-    if (addItemInput.value.length === 0) return;
-    let todo = { text: addItemInput.value, completed: false };
-    state.todos.push(todo);
+    createTodo(addItemInput.value);
     render();
   });
 
@@ -137,7 +177,7 @@ function renderTodoSection() {
     let todoInput = document.createElement("input");
     todoInput.type = "checkbox";
     todoInput.addEventListener("click", function () {
-      todo.completed = !todo.completed;
+      toggleTodo(todo.text);
       render();
     });
 
@@ -148,7 +188,8 @@ function renderTodoSection() {
     todoButton.textContent = "Delete";
     // Deleting a todo
     todoButton.addEventListener("click", function () {
-      todoLiEl.remove();
+      deleteTodo(todo.text);
+      render();
     });
 
     todoList.append(todoLiEl);
@@ -172,7 +213,7 @@ function renderCompletedSection() {
   let completedList = document.createElement("ul");
 
   let completedTodos = state.todos.filter((todo) => todo.completed === true);
-// Showing all the completed todos with a for loop
+  // Showing all the completed todos with a for loop
   for (let todo of completedTodos) {
     let completedLiEl = document.createElement("li");
     completedLiEl.className = "todo completed";
@@ -182,7 +223,7 @@ function renderCompletedSection() {
     completedInput.checked = true;
     // Make a todo incomplete
     completedInput.addEventListener("click", function () {
-      todo.completed = !todo.completed;
+      toggleTodo(todo.text);
       render();
     });
 
@@ -192,7 +233,8 @@ function renderCompletedSection() {
     let completedButton = document.createElement("button");
     completedButton.textContent = "Delete";
     completedButton.addEventListener("click", function () {
-      completedLiEl.remove();
+     deleteTodo(todo.text);
+      render();
     });
 
     completedList.append(completedLiEl);
