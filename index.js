@@ -8,7 +8,7 @@
 // Instructions
 // - Start this project from scratch, write whatever HTML, CSS & JS you need ✅
 // - Create a state object that will hold your todos ✅
-// - Create action functions that update state ✅🤔❔
+// - Create action functions that update state ✅
 // - Create render functions that read from state ✅
 
 // Tips
@@ -30,10 +30,10 @@ let state = {
       text: "Work out",
       completed: false,
     },
-    // {
-    //     text: "Go to the cinema",
-    //     completed: true,
-    // }
+    {
+        text: "Go to the cinema",
+        completed: true,
+    }
   ],
   showCompleted: false,
 };
@@ -41,40 +41,28 @@ let state = {
 function toggleShowCompleted() {
   state.showCompleted = !state.showCompleted;
   render();
-}
+} //✅
 function toggleTodo(text) {
   // find the todo we want to toggle
-  let match = state.todos.find(todo => todo.text === text)
-  if (!match) return
+  let match = state.todos.find((todo) => todo.text === text);
+  if (!match) return;
 
   // if it exists, toggle it
-  match.completed = !match.completed
+  match.completed = !match.completed;
 } //✅
-//   state.todos.push(todo);
-//   render();
-// }
 
-// Q: What are my todos? state.todos
-// Q: Can I add a todo? state.todos.push()
-// Q: Should I be showing completed todos? state.showCompleted
-// Q: What are my incomplete todos? state.todos.filter(todo => todo.completed===false)
-// Q: What are my completed todos? state.todos.filter(todo => todo.completed===true)
+function getIncompleteTodos() {
+  return state.todos.filter((todo) => todo.completed === false);
+} //✅
 
-// For a single todo can I check if it si completed? todo.completed
-// For a single todo what is the text? todo.text
-
-// function getIncompleteTodos() {
-//   return state.todos.filter(todo => todo.completed === false)
-// }
-
-// function getCompleteTodos() {
-//   return state.todos.filter(todo => todo.completed === true)
-// }
+function getCompleteTodos() {
+  return state.todos.filter((todo) => todo.completed === true);
+} //✅
 
 function getTodosToDisplay() {
   if (state.showCompleted) return state.todos;
-  // else return getIncompleteTodos()
-}
+  else return getIncompleteTodos();
+} //❌
 function createTodo(text) {
   // check if the todo is in the list
   let foundMatch = state.todos.some((todo) => todo.text === text);
@@ -88,10 +76,9 @@ function createTodo(text) {
 } //✅
 
 function deleteTodo(text) {
-  let updatedTodos = state.todos.filter(todo => todo.text !== text)
-  state.todos = updatedTodos
+  let updatedTodos = state.todos.filter((todo) => todo.text !== text);
+  state.todos = updatedTodos;
 } //✅
-
 
 // Creating App container
 function renderApp() {
@@ -113,12 +100,11 @@ function renderOptionsSection() {
 
   let showCompletedInput = document.createElement("input");
   showCompletedInput.type = "checkbox";
-  if(state.showCompleted) showCompletedInput.checked = true;
+  if (state.showCompleted) showCompletedInput.checked = true;
   showCompletedInput.addEventListener("click", function () {
     toggleShowCompleted();
-
-  }
-  );
+    render();
+  });
 
   optionsSection.append(optionsTitle, showCompletedLabel);
   showCompletedLabel.append("Show completed", showCompletedInput);
@@ -168,9 +154,9 @@ function renderTodoSection() {
 
   let todoList = document.createElement("ul");
 
-  let incompleteTodos = state.todos.filter((todo) => todo.completed === false);
   // Showing all the incomplete todos with a for loop
-  for (let todo of incompleteTodos) {
+  let incompleteTodos = getIncompleteTodos();
+  for (let todo of getIncompleteTodos()) {
     let todoLiEl = document.createElement("li");
     todoLiEl.className = "todo";
     // Make a todo complete
@@ -212,15 +198,16 @@ function renderCompletedSection() {
 
   let completedList = document.createElement("ul");
 
-  let completedTodos = state.todos.filter((todo) => todo.completed === true);
   // Showing all the completed todos with a for loop
-  for (let todo of completedTodos) {
+  let completedTodos = getCompleteTodos();
+  for (let todo of getCompleteTodos()) {
     let completedLiEl = document.createElement("li");
     completedLiEl.className = "todo completed";
 
     let completedInput = document.createElement("input");
     completedInput.type = "checkbox";
     completedInput.checked = true;
+
     // Make a todo incomplete
     completedInput.addEventListener("click", function () {
       toggleTodo(todo.text);
@@ -232,8 +219,9 @@ function renderCompletedSection() {
 
     let completedButton = document.createElement("button");
     completedButton.textContent = "Delete";
+    // Deleting a todo
     completedButton.addEventListener("click", function () {
-     deleteTodo(todo.text);
+      deleteTodo(todo.text);
       render();
     });
 
@@ -258,8 +246,3 @@ function render() {
 }
 
 render();
-
-//I need to find where to put this so I can tick second item of the Deliverables 🤷‍♀️
-// if (addItemInput.checked === true) {
-//     renderCompletedSection.remove();
-// }
