@@ -31,9 +31,9 @@ let state = {
       completed: false,
     },
     {
-        text: "Go to the cinema",
-        completed: true,
-    }
+      text: "Go to the cinema",
+      completed: true,
+    },
   ],
   showCompleted: false,
 };
@@ -59,10 +59,15 @@ function getCompleteTodos() {
   return state.todos.filter((todo) => todo.completed === true);
 } //✅
 
-function getTodosToDisplay() {
-  if (state.showCompleted) return state.todos;
-  else return getIncompleteTodos();
-} //❌
+function getCompletdTodosToDisplay() {
+if (state.showCompleted) {
+  return getCompleteTodos();
+}
+//else {
+//   return 
+// }
+} 
+ //❌
 function createTodo(text) {
   // check if the todo is in the list
   let foundMatch = state.todos.some((todo) => todo.text === text);
@@ -105,6 +110,12 @@ function renderOptionsSection() {
     toggleShowCompleted();
     render();
   });
+  // if (state.showCompleted) showCompletedInput.checked = true;
+  // showCompletedInput.addEventListener("click", function () {
+  // getCompleteTodos();
+  // render();
+  // }
+  // );
 
   optionsSection.append(optionsTitle, showCompletedLabel);
   showCompletedLabel.append("Show completed", showCompletedInput);
@@ -155,11 +166,11 @@ function renderTodoSection() {
   let todoList = document.createElement("ul");
 
   // Showing all the incomplete todos with a for loop
-  let incompleteTodos = getIncompleteTodos();
+  // let incompleteTodos = getIncompleteTodos();
   for (let todo of getIncompleteTodos()) {
     let todoLiEl = document.createElement("li");
     todoLiEl.className = "todo";
-    // Make a todo complete
+    // Toggleing the completed state of the todo
     let todoInput = document.createElement("input");
     todoInput.type = "checkbox";
     todoInput.addEventListener("click", function () {
@@ -199,8 +210,8 @@ function renderCompletedSection() {
   let completedList = document.createElement("ul");
 
   // Showing all the completed todos with a for loop
-  let completedTodos = getCompleteTodos();
-  for (let todo of getCompleteTodos()) {
+  // let completedTodos = getCompleteTodos();
+  for (let todo of getCompletdTodosToDisplay()) {
     let completedLiEl = document.createElement("li");
     completedLiEl.className = "todo completed";
 
@@ -208,7 +219,7 @@ function renderCompletedSection() {
     completedInput.type = "checkbox";
     completedInput.checked = true;
 
-    // Make a todo incomplete
+    // Toggleing a completed todo
     completedInput.addEventListener("click", function () {
       toggleTodo(todo.text);
       render();
