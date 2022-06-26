@@ -1,7 +1,7 @@
 // Deliverables
 // A user can:
 // - View incomplete todos ✅
-// - When the "Show completed todos" box is checked, view completed todos as well ❌
+// - When the "Show completed todos" box is checked, view completed todos as well ✅ ❔
 // - Enter a new todo, which will initially show as incomplete ✅
 // - Click a todo to toggle its completion  ✅
 
@@ -60,14 +60,10 @@ function getCompleteTodos() {
 } //✅
 
 function getCompletdTodosToDisplay() {
-if (state.showCompleted) {
-  return getCompleteTodos();
-}
-//else {
-//   return 
-// }
-} 
- //❌
+if (state.showCompleted)  return getCompleteTodos();
+
+
+} // ✅ ❔
 function createTodo(text) {
   // check if the todo is in the list
   let foundMatch = state.todos.some((todo) => todo.text === text);
@@ -210,8 +206,8 @@ function renderCompletedSection() {
   let completedList = document.createElement("ul");
 
   // Showing all the completed todos with a for loop
-  // let completedTodos = getCompleteTodos();
-  for (let todo of getCompletdTodosToDisplay()) {
+  let completedTodos = getCompletdTodosToDisplay();
+  for (let todo of completedTodos) {
     let completedLiEl = document.createElement("li");
     completedLiEl.className = "todo completed";
 
